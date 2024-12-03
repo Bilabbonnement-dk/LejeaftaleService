@@ -1,5 +1,3 @@
-# import_json.py
-
 import csv
 import sqlite3
 
@@ -25,8 +23,6 @@ CREATE TABLE IF NOT EXISTS Lejeaftale (
 ''')
 
 with open('Lejeaftale.csv', 'r', encoding='utf-8-sig') as files:
-    csv_reader = csv.DictReader(files)
-    
     csv_reader = csv.DictReader(files, delimiter=';')
 
     print("Headers:", csv_reader.fieldnames)  # Print the detected headers
@@ -35,10 +31,9 @@ with open('Lejeaftale.csv', 'r', encoding='utf-8-sig') as files:
     for lejeaftale in csv_reader:
         print(lejeaftale)
         cursor.execute('''
-        INSERT INTO Lejeaftale (LejeaftaleID, KundeID, BilID, StartDato, SlutDate, Udleveringssted, AbonnementsVarighed, AftaleKM, PrisPrMåned, Status)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        INSERT INTO Lejeaftale (KundeID, BilID, StartDato, SlutDate, Udleveringssted, AbonnementsVarighed, AftaleKM, PrisPrMåned, Status)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', (
-            lejeaftale["LejeaftaleID"], 
             lejeaftale["KundeID"], 
             lejeaftale["BilID"], 
             lejeaftale["StartDato"], 
@@ -48,7 +43,7 @@ with open('Lejeaftale.csv', 'r', encoding='utf-8-sig') as files:
             lejeaftale["AftaleKM"], 
             lejeaftale["PrisPrMåned"],
             lejeaftale["Status"]
-            ))
+        ))
 
 conn.commit()
 conn.close()
