@@ -28,6 +28,29 @@ def ledigeBiler():
     
     return jsonify({"available_cars": formatted_cars}), 201
 
+@app.route('/nyLejeAftale', methods=['GET'])
+def nyLejeAftale():
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM Lejeaftale WHERE status = 'ny'")
+    nye_leje_aftaler = cursor.fetchall()
+    conn.close()
+
+    formatted_agreements = [{
+        "lejeaftale_id": agreement[0],
+        "kunde_id": agreement[1],
+        "bil_id": agreement[2],
+        "start_dato": agreement[3],
+        "slut_dato": agreement[4],
+        "udleveringssted": agreement[5],
+        "abonnements_varighed": agreement[6],
+        "aftale_km": agreement[7],
+        "pris_pr_måned": agreement[8],
+        "status": agreement[9]
+    } for agreement in nye_leje_aftaler]
+    
+    return jsonify({"nye_leje_aftaler": formatted_agreements}), 200
+
 @app.route('/opretLejeAftale', methods=['POST'])
 def opretLejeAftale():
     data = request.get_json()
@@ -66,13 +89,8 @@ def opretLejeAftale():
         "available_cars": car_costs
     }), 201
 
-@app.route('/nyLejeAftale', methods=['POST'])
-def nyLejeAftale():
-    conn = sqlite3.connect('lejeaftale.db')
-    cursor = conn.cursor()
-    cursor.execute("SELECT * FROM Lejeaftale WHERE status = 'ny'")
-    rows = cursor.fetchall()
-    conn.close()
-    return rows
+@app.route('/statusOpdatering/lejeAftaleID', methods=['POST'])
+
+@app.route('/lejeAftale/lejeAftaleID', methods=['DELETE'])
 
 app.run(debug=True, host='0.0.0.0', port=5002)
