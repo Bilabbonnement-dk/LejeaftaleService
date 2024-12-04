@@ -15,9 +15,9 @@ CREATE TABLE IF NOT EXISTS Lejeaftale (
     StartDato DATE, 
     SlutDate DATE,
     Udleveringssted TEXT,
-    AbonnementsVarighed FLOAT NOT NULL,
+    AbonnementsVarighed INT NOT NULL,
     AftaleKM FLOAT NOT NULL,
-    PrisPrMåned FLOAT,
+    PrisPrMåned INT NOT NULL,
     Status TEXT NOT NULL
 )
 ''')
