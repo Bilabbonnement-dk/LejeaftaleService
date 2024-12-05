@@ -111,9 +111,6 @@ def process_data(bil_id):
     data = get_customerID_by_CarID(bil_id)
     print(f"Received data: {data}")
 
-    # Process data and return a response
-    processed_data = {"message": "Data processed successfully", "received": data}
-    return jsonify(processed_data), 200
 
 
 
