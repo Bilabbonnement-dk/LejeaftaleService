@@ -249,3 +249,17 @@ def delete_agreement(data):
 
     return {"message": "Agreement succesfully deleted"}, 200
 
+############   Send data to SkadesService  ##########
+
+def get_customerID_by_CarID(bil_id):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    # Query to get all BilIDs associated with the given KundeID
+    cursor.execute("SELECT KundeID FROM Lejeaftale WHERE BilID = ?", (bil_id,))
+    rows = cursor.fetchall()
+    conn.close()
+
+    # Return a list of KundeIDs
+    kunde_ids = [row["KundeID"] for row in rows]
+    return {"bil_id": bil_id, "kunde_ids": kunde_ids}, 200

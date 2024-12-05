@@ -5,9 +5,8 @@
 """
 
 from flask import Flask, jsonify, request, make_response
-import sqlite3
-import os
 from datetime import datetime
+import requests
 
 from Service.lejeaftaler import fetch_agreements
 from Service.lejeaftaler import fetch_available_cars
@@ -16,9 +15,8 @@ from Service.lejeaftaler import create_agreement
 from Service.lejeaftaler import update_agreement_status
 from Service.lejeaftaler import delete_agreement
 from Service.lejeaftaler import fetch_customer_data
+from Service.lejeaftaler import get_customerID_by_CarID
 
-script_dir = os.path.dirname(os.path.abspath(__file__))
-db_path = os.path.join(script_dir, 'database/lejeaftale.db')
 
 app = Flask(__name__)
 
@@ -92,6 +90,32 @@ def get_cutomer_data(kundeID):
 
     # Call the update function with required data
     return jsonify(customerData), 200
+
+# Send data to Skades Service
+@app.route('/process-data', methods=['POST'])
+def process_data():
+    # Retrieve JSON payload from Service A
+    data = request.json
+    print(f"Received data: {data}")
+
+    # Process data and return a response
+    processed_data = {"message": "Data processed successfully", "received": data}
+    return jsonify(processed_data), 200
+
+
+###### Not working #####
+# Send Cutomer data to Skades Service
+@app.route('/kunde/<int:bil_id>/biler', methods=['GET'])
+def process_data(bil_id):
+    # Retrieve JSON payload from Service A
+    data = get_customerID_by_CarID(bil_id)
+    print(f"Received data: {data}")
+
+    # Process data and return a response
+    processed_data = {"message": "Data processed successfully", "received": data}
+    return jsonify(processed_data), 200
+
+
 
 
 #@app.route('/statusOpdatering/lejeAftaleID', methods=['POST'])
