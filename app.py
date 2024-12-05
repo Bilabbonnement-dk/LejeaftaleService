@@ -15,7 +15,7 @@ from Service.lejeaftaler import create_agreement
 from Service.lejeaftaler import update_agreement_status
 from Service.lejeaftaler import delete_agreement
 from Service.lejeaftaler import fetch_customer_data
-from Service.lejeaftaler import get_customerID_by_CarID
+from Service.connections import get_kunde_data
 
 
 app = Flask(__name__)
@@ -104,13 +104,22 @@ def process_data():
 
 
 ###### Not working #####
-# Send Cutomer data to Skades Service
-@app.route('/kunde/<int:bil_id>/biler', methods=['GET'])
-def process_data(bil_id):
-    # Retrieve JSON payload from Service A
-    data = get_customerID_by_CarID(bil_id)
-    print(f"Received data: {data}")
+# Preocess data to Skades Service
+@app.route('/process-kunde-data', methods=['POST'])
+def process_kunde_data():
 
+    # Retrieve json payload
+    data = request.json
+    lejeaftale_id = data.get("lejeaftale_id")
+
+    # Validate input
+    if not lejeaftale_id or not isinstance(lejeaftale_id, int):
+        return jsonify({"error": "Invalid or missing field: 'lejeaftale_id'"}), 400
+
+    # Call the service function to get data
+    result, status_code = get_kunde_data(lejeaftale_id)
+    
+    return jsonify(result), status_code
 
 
 
