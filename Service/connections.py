@@ -2,6 +2,7 @@ import json
 import sqlite3
 import os
 import datetime
+from flask import jsonify
 
 
 ############   Database connection function   ##########
@@ -14,6 +15,21 @@ def get_db_connection():
 
 script_dir = os.path.dirname(os.path.abspath(__file__))
 db_path = os.path.join(script_dir, '../database/lejeaftale.db')
+
+def get_lejeaftale():
+    conn = get_db_connection()
+    lejeaftale_data = conn.execute("SELECT BilID, PrisPrMåned, KundeID FROM Lejeaftale").fetchall()
+    conn.close()
+    lejeaftale_list = [{"BilID": row["BilID"], "PrisPrMåned": row["PrisPrMåned"], "KundeID": row["KundeID"]} for row in lejeaftale_data]
+    return jsonify(lejeaftale_list), 200
+
+def get_status(bil_id):
+    conn = get_db_connection()
+    status_data = conn.execute("SELECT Status FROM Lejeaftale WHERE BilID = ?", (bil_id,)).fetchone()
+    conn.close()
+    return jsonify({"status": status_data["Status"] if status_data else "Unknown"}), 200
+
+
 
 
 # Function to fetch KundeID and related data for a given LejeaftaleID

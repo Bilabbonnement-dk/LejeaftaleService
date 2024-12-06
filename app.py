@@ -16,7 +16,8 @@ from Service.lejeaftaler import update_agreement_status
 from Service.lejeaftaler import delete_agreement
 from Service.lejeaftaler import fetch_customer_data
 from Service.connections import get_kunde_data
-
+from Service.connections import get_lejeaftale
+from Service.connections import get_status
 
 app = Flask(__name__)
 
@@ -121,8 +122,15 @@ def process_kunde_data():
     
     return jsonify(result), status_code
 
+@app.route('/lejeaftale', methods=['GET'])
+def active_lejeaftale():
+    active_lejeaftale = get_lejeaftale()
+    return active_lejeaftale
 
-
+@app.route('/status/<int:bil_id>', methods=['GET'])
+def get_car_status(bil_id):
+    status = get_status(bil_id)
+    return status
 
 #@app.route('/statusOpdatering/lejeAftaleID', methods=['POST'])
 
