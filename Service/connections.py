@@ -25,7 +25,7 @@ def get_kunde_data(lejeaftale_id):
         cursor = conn.cursor()
 
         # Query to fetch data for the provided LejeaftaleID
-        query = "SELECT LejeaftaleID, KundeID, BilID, Status FROM Lejeaftale WHERE Status = 'Aktiv' AND LejeaftaleID = ?"
+        query = "SELECT LejeaftaleID, KundeID, BilID, Status FROM Lejeaftale WHERE LejeaftaleID = ?"
 
         cursor.execute(query, (lejeaftale_id,))
         result = cursor.fetchone()
