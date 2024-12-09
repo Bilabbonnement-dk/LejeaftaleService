@@ -16,6 +16,8 @@ from Service.lejeaftaler import update_agreement_status
 from Service.lejeaftaler import delete_agreement
 from Service.lejeaftaler import fetch_customer_data
 from Service.connections import get_kunde_data
+from import_excel_to_sqlite import import_excel_to_sqlite
+from Service.bildatabase import fetch_all_cars, fetch_car_by_id, delete_car, update_car_status
 
 
 app = Flask(__name__)
@@ -49,7 +51,7 @@ def add_agreement():
 
 
 @app.route('/statusOpdatering/<int:lejeAftaleID>', methods=['PUT'])
-def update_status(lejeAftaleID):
+def update_agreement_status(lejeAftaleID):
     # Parse JSON body
     data = request.get_json()
     if not data:
@@ -122,7 +124,54 @@ def process_kunde_data():
     return jsonify(result), status_code
 
 
+####### Hent Data fra bilDatabase ########
 
+# Opdater database
+@app.route('/opdater-database', methods=['POST'])
+def opdater_database():
+    try:
+        import_excel_to_sqlite()
+        return jsonify({"message": "Databasen er opdateret med data fra Excel"}), 200
+    except Exception as e:
+        return jsonify({"message": "Fejl under opdatering af databasen", "error": str(e)}), 500
+
+# Hent alle biler
+@app.route('/biler', methods=['GET'])
+def get_all_cars():
+    cars = fetch_all_cars()
+    return jsonify(cars), 200
+
+# Hent en bil baseret på bil_id
+@app.route('/biler/<int:bil_id>', methods=['GET'])
+def get_car(bil_id):
+    car = fetch_car_by_id(bil_id)
+    if car:
+        return jsonify(car), 200
+    return jsonify({"error": f"Bil med ID {bil_id} ikke fundet"}), 404
+
+# Slet en bil
+@app.route('/biler/<int:bil_id>', methods=['DELETE'])
+def remove_car(bil_id):
+    response = delete_car(bil_id)
+    return jsonify(response), 200
+
+# Endpoint: Opdater bilens status
+@app.route('/biler/<int:bil_id>/status', methods=['PUT'])
+def change_car_status(bil_id):
+    data = request.get_json()
+    if not data:
+        return jsonify({"error": "Invalid or missing JSON body"}), 400
+
+    # Valider, at 'status' feltet er til stede
+    new_status = data.get('status')
+    if not new_status or new_status not in ["aktiv", "inaktiv"]:
+        return jsonify({"error": "Ugyldig eller manglende værdi for 'status'. Tilladte værdier: 'aktiv', 'inaktiv'"}), 400
+
+    # Opdater bilens status
+    result = update_car_status(bil_id, new_status)
+    if "error" in result:
+        return jsonify(result), 404
+    return jsonify(result), 200
 
 #@app.route('/statusOpdatering/lejeAftaleID', methods=['POST'])
 
