@@ -18,6 +18,7 @@ from Service.lejeaftaler import fetch_customer_data
 from Service.connections import get_kunde_data
 from Service.connections import get_lejeaftale
 from Service.connections import get_status
+from Service.connections import send_data_to_skades_service
 
 app = Flask(__name__)
 
@@ -66,7 +67,6 @@ def update_status(lejeAftaleID):
     return jsonify(result), status_code
 
 
-
 @app.route('/sletLejeAftale/<int:lejeAftaleID>', methods=['DELETE'])
 def remove_agreement(lejeAftaleID):
     # Parse JSON body
@@ -92,6 +92,9 @@ def get_cutomer_data(kundeID):
     # Call the update function with required data
     return jsonify(customerData), 200
 
+
+########## Send and recieve data ##########
+
 # Send data to Skades Service
 @app.route('/process-data', methods=['POST'])
 def process_data():
@@ -104,7 +107,6 @@ def process_data():
     return jsonify(processed_data), 200
 
 
-###### Not working #####
 # Preocess data to Skades Service
 @app.route('/process-kunde-data', methods=['POST'])
 def process_kunde_data():
@@ -121,6 +123,19 @@ def process_kunde_data():
     result, status_code = get_kunde_data(lejeaftale_id)
     
     return jsonify(result), status_code
+
+# Send data to Lejeaftale Service
+@app.route('/send-damage-data/new-damage', methods=['POST'])
+def send_request():
+
+    data = request.get_json()
+    if not data:
+        return jsonify({"error": "Invalid json data"}), 400
+    
+    result, status_code = send_data_to_skades_service(data)
+    return jsonify(result), status_code
+
+
 
 @app.route('/lejeaftale', methods=['GET'])
 def active_lejeaftale():

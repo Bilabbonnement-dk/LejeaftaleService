@@ -2,6 +2,7 @@ import json
 import sqlite3
 import os
 import datetime
+import requests
 from flask import jsonify
 
 
@@ -15,6 +16,11 @@ def get_db_connection():
 
 script_dir = os.path.dirname(os.path.abspath(__file__))
 db_path = os.path.join(script_dir, '../database/lejeaftale.db')
+
+
+######### url for Skades Service #########
+SKADES_SERVICE_URL = "http://localhost:5001"
+
 
 def get_lejeaftale():
     conn = get_db_connection()
@@ -31,7 +37,7 @@ def get_status(bil_id):
     return jsonify({"status": status_data["Status"] if status_data else "Unknown"}), 200
 
 
-
+############   Functionallity behind sending KUndeID to skades service    ##########
 
 # Function to fetch KundeID and related data for a given LejeaftaleID
 def get_kunde_data(lejeaftale_id):
@@ -61,3 +67,23 @@ def get_kunde_data(lejeaftale_id):
 
     except sqlite3.Error as e:
         return {"error": f"Database error: {e}"}, 500
+    
+    
+############   Functionallity behind sending damage to skades service    ##########
+
+##  Get customer id from lejeaftale service  ##
+
+def send_data_to_skades_service(data):
+    try:
+        # Send the POST request to SkadesService
+        response = requests.post(f"{SKADES_SERVICE_URL}/process-damage-data", json=data)
+
+        # Handle response from SkadesService
+        if response.status_code == 200 or 201:
+            return response.json(), 200
+        elif response.status_code == 404:
+            return {"error": "Resource not found on SkadesService"}, 404
+        else:
+            return {"error": f"Unexpected response from SkadesService: {response.text}"}, response.status_code
+    except requests.exceptions.RequestException as e:
+        return {"error": f"Failed to connect to SkadesService: {str(e)}"}, 500
