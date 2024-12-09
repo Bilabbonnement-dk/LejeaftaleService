@@ -23,6 +23,7 @@ def get_lejeaftale():
     lejeaftale_list = [{"BilID": row["BilID"], "PrisPrMåned": row["PrisPrMåned"], "KundeID": row["KundeID"]} for row in lejeaftale_data]
     return jsonify(lejeaftale_list), 200
 
+#bil_id fra bildatabase og ikke lejeaftale database
 def get_status(bil_id):
     conn = get_db_connection()
     status_data = conn.execute("SELECT Status FROM Lejeaftale WHERE BilID = ?", (bil_id,)).fetchone()
