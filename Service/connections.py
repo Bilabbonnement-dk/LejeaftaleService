@@ -24,9 +24,9 @@ SKADES_SERVICE_URL = "http://localhost:5001"
 
 def get_lejeaftale():
     conn = get_db_connection()
-    lejeaftale_data = conn.execute("SELECT BilID, PrisPrMåned, KundeID FROM Lejeaftale").fetchall()
+    lejeaftale_data = conn.execute("SELECT BilID, PrisPrMåned, KundeID, AbonnementsVarighed FROM Lejeaftale").fetchall()
     conn.close()
-    lejeaftale_list = [{"BilID": row["BilID"], "PrisPrMåned": row["PrisPrMåned"], "KundeID": row["KundeID"]} for row in lejeaftale_data]
+    lejeaftale_list = [{"BilID": row["BilID"], "PrisPrMåned": row["PrisPrMåned"], "KundeID": row["KundeID"], "AbonnementsVarighed": row["AbonnementsVarighed"]} for row in lejeaftale_data]
     return jsonify(lejeaftale_list), 200
 
 #bil_id fra bildatabase og ikke lejeaftale database
