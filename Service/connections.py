@@ -86,3 +86,32 @@ def send_data_to_skades_service(data):
             return {"error": f"Unexpected response from SkadesService: {response.text}"}, response.status_code
     except requests.exceptions.RequestException as e:
         return {"error": f"Failed to connect to SkadesService: {str(e)}"}, 500
+    
+
+############ Function to fetch BilID and monthly rent related data for a given LejeaftaleID ##########
+
+def get_price_data():
+
+    try:
+        # Connect to the database
+        conn = get_db_connection()
+        cursor = conn.cursor()
+
+        # Query to fetch data for the provided LejeaftaleID
+        query = "SELECT BilID, PrisPrMåned FROM Lejeaftale "
+
+        cursor.execute(query, )
+        result = cursor.fetchone()
+        conn.close()
+
+        # Return the result
+        if result:
+            return {
+                "bil_id": result["BilID"],
+                "pris_pr_måned": result["PrisPrMåned"]
+            }, 200
+        else:
+            return {"error": f"No data found"}, 404
+
+    except sqlite3.Error as e:
+        return {"error": f"Database error: {e}"}, 500

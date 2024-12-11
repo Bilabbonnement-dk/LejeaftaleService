@@ -146,6 +146,22 @@ def get_car_status(bil_id):
     status = get_status(bil_id)
     return status
 
+# Preocess price data to Skades Service
+@app.route('/process-pris-data', methods=['POST'])
+def process_price_data():
+
+    # Retrieve json payload
+    data = request.json
+
+    # Validate input
+    if not data:
+        return jsonify({"error": "No data found'"}), 400
+
+    # Call the service function to get data
+    result, status_code = get_price_data()
+    
+    return jsonify(result), status_code
+
 #@app.route('/statusOpdatering/lejeAftaleID', methods=['POST'])
 
 #@app.route('/lejeAftale/lejeAftaleID', methods=['DELETE'])
