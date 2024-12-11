@@ -98,7 +98,7 @@ def get_cutomer_data(kundeID):
 # Send data to Skades Service
 @app.route('/process-data', methods=['POST'])
 def process_data():
-    # Retrieve JSON payload from Service A
+    # Retrieve JSON payload 
     data = request.json
     print(f"Received data: {data}")
 
@@ -134,7 +134,6 @@ def send_request():
     
     result, status_code = send_data_to_skades_service(data)
     return jsonify(result), status_code
-
 
 
 @app.route('/lejeaftale', methods=['GET'])

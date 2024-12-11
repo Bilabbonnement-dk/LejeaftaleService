@@ -37,7 +37,7 @@ def get_status(bil_id):
     return jsonify({"status": status_data["Status"] if status_data else "Unknown"}), 200
 
 
-############   Functionallity behind sending KUndeID to skades service    ##########
+############   Functionallity behind sending KundeID to skades service    ##########
 
 # Function to fetch KundeID and related data for a given LejeaftaleID
 def get_kunde_data(lejeaftale_id):
@@ -71,7 +71,6 @@ def get_kunde_data(lejeaftale_id):
     
 ############   Functionallity behind sending damage to skades service    ##########
 
-##  Get customer id from lejeaftale service  ##
 
 def send_data_to_skades_service(data):
     try:
