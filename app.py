@@ -16,6 +16,9 @@ from Service.lejeaftaler import update_agreement_status
 from Service.lejeaftaler import delete_agreement
 from Service.lejeaftaler import fetch_customer_data
 from Service.connections import get_kunde_data
+from Service.connections import get_lejeaftale
+from Service.connections import get_status
+from Service.connections import send_data_to_skades_service
 from import_excel_to_sqlite import import_excel_to_sqlite
 from Service.bildatabase import fetch_all_cars, fetch_car_by_id, delete_car, update_car_status
 
@@ -67,7 +70,6 @@ def update_agreement_status(lejeAftaleID):
     return jsonify(result), status_code
 
 
-
 @app.route('/sletLejeAftale/<int:lejeAftaleID>', methods=['DELETE'])
 def remove_agreement(lejeAftaleID):
     # Parse JSON body
@@ -93,10 +95,13 @@ def get_cutomer_data(kundeID):
     # Call the update function with required data
     return jsonify(customerData), 200
 
+
+########## Send and recieve data ##########
+
 # Send data to Skades Service
 @app.route('/process-data', methods=['POST'])
 def process_data():
-    # Retrieve JSON payload from Service A
+    # Retrieve JSON payload 
     data = request.json
     print(f"Received data: {data}")
 
@@ -105,7 +110,6 @@ def process_data():
     return jsonify(processed_data), 200
 
 
-###### Not working #####
 # Preocess data to Skades Service
 @app.route('/process-kunde-data', methods=['POST'])
 def process_kunde_data():
@@ -123,6 +127,43 @@ def process_kunde_data():
     
     return jsonify(result), status_code
 
+# Send data to Lejeaftale Service
+@app.route('/send-damage-data/new-damage', methods=['POST'])
+def send_request():
+
+    data = request.get_json()
+    if not data:
+        return jsonify({"error": "Invalid json data"}), 400
+    
+    result, status_code = send_data_to_skades_service(data)
+    return jsonify(result), status_code
+
+
+@app.route('/lejeaftale', methods=['GET'])
+def active_lejeaftale():
+    active_lejeaftale = get_lejeaftale()
+    return active_lejeaftale
+
+@app.route('/status/<int:bil_id>', methods=['GET'])
+def get_car_status(bil_id):
+    status = get_status(bil_id)
+    return status
+
+# Preocess price data to Skades Service
+@app.route('/process-pris-data', methods=['POST'])
+def process_price_data():
+
+    # Retrieve json payload
+    data = request.json
+
+    # Validate input
+    if not data:
+        return jsonify({"error": "No data found'"}), 400
+
+    # Call the service function to get data
+    result, status_code = get_price_data()
+    
+    return jsonify(result), status_code
 
 ####### Hent Data fra bilDatabase ########
 
