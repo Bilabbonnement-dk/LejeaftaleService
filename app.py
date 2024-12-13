@@ -28,6 +28,105 @@ from Service.bildatabase import fetch_all_cars, fetch_car_by_id, delete_car, upd
 app = Flask(__name__)
 swagger = Swagger(app, config=swagger_config)
 
+@app.route('/')
+@swag_from('swagger/home.yaml')
+def home():
+    return jsonify({
+        "service": "API Gateway",
+        "available_endpoints": [
+            {
+                "path": "/lejeaftaler",
+                "method": "GET",
+                "description": "Get all lejeaftaler"
+            },
+            {
+                "path": "/ledigeBiler",
+                "method": "GET",
+                "description": "Get all available cars"
+            },
+            {
+                "path": "/nyLejeAftale",
+                "method": "GET",
+                "description": "Get all new lejeaftaler"
+            },
+            {
+                "path": "/opretLejeAftale",
+                "method": "POST",
+                "description": "Create a new lejeaftale"
+            },
+            {
+                "path": "/statusOpdatering/<int:lejeAftaleID>",
+                "method": "PUT",
+                "description": "Update the status of a lejeaftale"
+            },
+            {
+                "path": "/sletLejeAftale/<int:lejeAftaleID>",
+                "method": "DELETE",
+                "description": "Delete a lejeaftale"
+            },
+            {
+                "path": "/kundeID/<int:kundeID>",
+                "method": "GET",
+                "description": "Get all lejeaftaler for a specific customer"
+            },
+            {
+                "path": "/process-data",
+                "method": "POST",
+                "description": "Process data from Skades Service"
+            },
+            {
+                "path": "/kunde/<int:bil_id>/biler",
+                "method": "GET",
+                "description": "Get customer data by car ID"
+            },
+            {
+                "path": "/send-damage-data/new-damage",
+                "method": "POST",
+                "description": "Send damage data to Skades Service"
+            },
+            {
+                "path": "/lejeaftale",
+                "method": "GET",
+                "description": "Get active lejeaftale"
+            },
+            {
+                "path": "/status/<int:bil_id>",
+                "method": "GET",
+                "description": "Get car status"
+            },
+            {
+                "path": "/process-pris-data",
+                "method": "POST",
+                "description": "Process price data to Skades Service"
+            },
+            {
+                "path": "/opdater-database",
+                "method": "POST",
+                "description": "Update the database with data from Excel"
+            },
+            {
+                "path": "/biler",
+                "method": "GET",
+                "description": "Get all cars"
+            },
+            {
+                "path": "/biler/<int:bil_id>",
+                "method": "GET",
+                "description": "Get car by ID"
+            },
+            {
+                "path": "/biler/<int:bil_id>",
+                "method": "DELETE",
+                "description": "Delete a car by ID"
+            },
+            {
+                "path": "/biler/<int:bil_id>/status",
+                "method": "PUT",
+                "description": "Update car status"
+            }
+        ]
+    })
+
 @app.route('/lejeaftaler', methods=['GET'])
 @swag_from('swagger/lejeaftaler.yaml')
 def get_all_agreements():

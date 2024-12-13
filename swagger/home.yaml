@@ -1,0 +1,23 @@
+tags:
+  - name: Root endpoint documentation
+summary: API Gateway Home
+description: Provides a list of all available endpoints in the API Gateway
+responses:
+  200:
+    description: A list of available endpoints
+    schema:
+      type: object
+      properties:
+        service:
+          type: string
+        available_endpoints:
+          type: array
+          items:
+            type: object
+            properties:
+              path:
+                type: string
+              method:
+                type: string
+              description:
+                type: string
