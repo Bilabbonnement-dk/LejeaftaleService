@@ -1,0 +1,50 @@
+tags:
+  - name: Opret Lejeaftale
+summary: Create a new lejeaftale
+description: Create a new lejeaftale with the provided data
+parameters:
+  - name: body
+    in: body
+    required: true
+    schema:
+      type: object
+      properties:
+        kunde_id:
+          type: integer
+        bil_id:
+          type: integer
+        start_dato:
+          type: string
+          format: date
+        slut_dato:
+          type: string
+          format: date
+        udleveringssted:
+          type: string
+        abonnements_varighed:
+          type: integer
+        aftale_km:
+          type: number
+        pris_pr_måned:
+          type: number
+        status:
+          type: string
+responses:
+  201:
+    description: Lejeaftale created successfully
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+        available_cars:
+          type: array
+          items:
+            type: object
+            properties:
+              bil_id:
+                type: integer
+              pris_pr_måned:
+                type: number
+              pris_i_alt:
+                type: number

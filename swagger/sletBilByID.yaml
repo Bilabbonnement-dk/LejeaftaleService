@@ -1,0 +1,25 @@
+tags:
+  - name: Slet Bil Efter ID
+summary: Delete a car by ID
+description: Delete a car by its ID
+parameters:
+  - name: bil_id
+    in: path
+    type: integer
+    required: true
+    description: The ID of the car
+responses:
+  200:
+    description: Car deleted successfully
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+  404:
+    description: Car not found
+    schema:
+      type: object
+      properties:
+        error:
+          type: string

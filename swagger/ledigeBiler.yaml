@@ -1,0 +1,19 @@
+tags:
+  - name: Ledige Biler
+summary: Get all available cars
+description: Retrieve a list of all available cars
+responses:
+  200:
+    description: A list of available cars
+    schema:
+      type: object
+      properties:
+        available_cars:
+          type: array
+          items:
+            type: object
+            properties:
+              bil_id:
+                type: integer
+              pris_pr_måned:
+                type: number

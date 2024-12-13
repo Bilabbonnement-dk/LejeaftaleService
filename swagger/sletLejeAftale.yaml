@@ -1,0 +1,18 @@
+tags:
+  - name: Slet Lejeaftale
+summary: Delete a lejeaftale
+description: Delete a lejeaftale by its ID
+parameters:
+  - name: lejeAftaleID
+    in: path
+    type: integer
+    required: true
+    description: The ID of the lejeaftale
+responses:
+  200:
+    description: Lejeaftale deleted successfully
+    schema:
+      type: object
+      properties:
+        message:
+          type: string

@@ -7,6 +7,8 @@
 from flask import Flask, jsonify, request, make_response
 from datetime import datetime
 import requests
+from flasgger import Swagger, swag_from
+from swagger.config import swagger_config
 
 from Service.lejeaftaler import fetch_agreements
 from Service.lejeaftaler import fetch_available_cars
@@ -24,26 +26,31 @@ from Service.bildatabase import fetch_all_cars, fetch_car_by_id, delete_car, upd
 
 
 app = Flask(__name__)
+swagger = Swagger(app, config=swagger_config)
 
 @app.route('/lejeaftaler', methods=['GET'])
+@swag_from('swagger/lejeaftaler.yaml')
 def get_all_agreements():
     agreements = fetch_agreements()
     return jsonify(agreements)
 
 
 @app.route('/ledigeBiler', methods=['GET'])
+@swag_from('swagger/ledigeBiler.yaml')
 def available_cars():
     availableCars = fetch_available_cars()
     return jsonify(availableCars)
 
 
 @app.route('/nyLejeAftale', methods=['GET'])
+@swag_from('swagger/nyLejeAftale.yaml')
 def new_agreements():
     newAgreements = fetch_new_agreements()
     return jsonify(newAgreements)
 
 
 @app.route('/opretLejeAftale', methods=['POST'])
+@swag_from('swagger/opretLejeAftale.yaml')
 def add_agreement():
     data = request.get_json()
     if not data:
@@ -54,6 +61,7 @@ def add_agreement():
 
 
 @app.route('/statusOpdatering/<int:lejeAftaleID>', methods=['PUT'])
+@swag_from('swagger/statusOpdatering.yaml')
 def update_agreement_status(lejeAftaleID):
     # Parse JSON body
     data = request.get_json()
@@ -71,6 +79,7 @@ def update_agreement_status(lejeAftaleID):
 
 
 @app.route('/sletLejeAftale/<int:lejeAftaleID>', methods=['DELETE'])
+@swag_from('swagger/sletLejeAftale.yaml')
 def remove_agreement(lejeAftaleID):
     # Parse JSON body
     data = request.get_data
@@ -84,6 +93,7 @@ def remove_agreement(lejeAftaleID):
 
 
 @app.route('/kundeID/<int:kundeID>', methods=['GET'])
+@swag_from('swagger/kundeID.yaml')
 def get_cutomer_data(kundeID):
 
     customerData = fetch_customer_data(kundeID)
@@ -100,6 +110,7 @@ def get_cutomer_data(kundeID):
 
 # Send data to Skades Service
 @app.route('/process-data', methods=['POST'])
+@swag_from('swagger/processData.yaml')
 def process_data():
     # Retrieve JSON payload 
     data = request.json
@@ -112,6 +123,7 @@ def process_data():
 
 # Preocess data to Skades Service
 @app.route('/process-kunde-data', methods=['POST'])
+@swag_from('swagger/processKundeData.yaml')
 def process_kunde_data():
 
     # Retrieve json payload
@@ -129,6 +141,7 @@ def process_kunde_data():
 
 # Send data to Lejeaftale Service
 @app.route('/send-damage-data/new-damage', methods=['POST'])
+@swag_from('swagger/sendDamageData.yaml')
 def send_request():
 
     data = request.get_json()
@@ -140,17 +153,20 @@ def send_request():
 
 
 @app.route('/lejeaftale', methods=['GET'])
+@swag_from('swagger/aktivLejeaftale.yaml')
 def active_lejeaftale():
     active_lejeaftale = get_lejeaftale()
     return active_lejeaftale
 
 @app.route('/status/<int:bil_id>', methods=['GET'])
+@swag_from('swagger/status.yaml')
 def get_car_status(bil_id):
     status = get_status(bil_id)
     return status
 
 # Preocess price data to Skades Service
 @app.route('/process-pris-data', methods=['POST'])
+@swag_from('swagger/processPrisData.yaml')
 def process_price_data():
 
     # Retrieve json payload
@@ -169,6 +185,7 @@ def process_price_data():
 
 # Opdater database
 @app.route('/opdater-database', methods=['POST'])
+@swag_from('swagger/opdaterDatabase.yaml')
 def opdater_database():
     try:
         import_excel_to_sqlite()
@@ -178,12 +195,14 @@ def opdater_database():
 
 # Hent alle biler
 @app.route('/biler', methods=['GET'])
+@swag_from('swagger/biler.yaml')
 def get_all_cars():
     cars = fetch_all_cars()
     return jsonify(cars), 200
 
 # Hent en bil baseret på bil_id
 @app.route('/biler/<int:bil_id>', methods=['GET'])
+@swag_from('swagger/bilerByID.yaml')
 def get_car(bil_id):
     car = fetch_car_by_id(bil_id)
     if car:
@@ -192,12 +211,14 @@ def get_car(bil_id):
 
 # Slet en bil
 @app.route('/biler/<int:bil_id>', methods=['DELETE'])
+@swag_from('swagger/sletBilByID.yaml')
 def remove_car(bil_id):
     response = delete_car(bil_id)
     return jsonify(response), 200
 
 # Endpoint: Opdater bilens status
 @app.route('/biler/<int:bil_id>/status', methods=['PUT'])
+@swag_from('swagger/opdaterBilStatus.yaml')
 def change_car_status(bil_id):
     data = request.get_json()
     if not data:

@@ -1,0 +1,41 @@
+tags:
+  - name: Opdater Bil Status
+summary: Update car status
+description: Update the status of a car by its ID
+parameters:
+  - name: bil_id
+    in: path
+    type: integer
+    required: true
+    description: The ID of the car
+  - name: body
+    in: body
+    required: true
+    schema:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [aktiv, inaktiv]
+responses:
+  200:
+    description: Car status updated successfully
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+  400:
+    description: Invalid or missing JSON body
+    schema:
+      type: object
+      properties:
+        error:
+          type: string
+  404:
+    description: Car not found
+    schema:
+      type: object
+      properties:
+        error:
+          type: string

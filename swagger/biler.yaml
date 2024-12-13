@@ -1,0 +1,22 @@
+tags:
+  - name: Biler
+summary: Get all cars
+description: Retrieve a list of all cars
+responses:
+  200:
+    description: A list of all cars
+    schema:
+      type: array
+      items:
+        type: object
+        properties:
+          bil_id:
+            type: integer
+          model:
+            type: string
+          mærke:
+            type: string
+          årgang:
+            type: integer
+          status:
+            type: string

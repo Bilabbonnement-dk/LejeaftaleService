@@ -1,0 +1,18 @@
+tags:
+  - name: Bil Status
+summary: Get car status
+description: Retrieve the status of a car by its ID
+parameters:
+  - name: bil_id
+    in: path
+    type: integer
+    required: true
+    description: The ID of the car
+responses:
+  200:
+    description: Car status retrieved successfully
+    schema:
+      type: object
+      properties:
+        status:
+          type: string

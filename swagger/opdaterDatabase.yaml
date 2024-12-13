@@ -1,0 +1,21 @@
+tags:
+  - name: Opdater Database
+summary: Update the database with data from Excel
+description: Update the database with data from an Excel file
+responses:
+  200:
+    description: Database updated successfully
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+  500:
+    description: Error occurred while updating the database
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+        error:
+          type: string

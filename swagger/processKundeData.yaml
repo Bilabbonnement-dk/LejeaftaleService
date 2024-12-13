@@ -1,0 +1,20 @@
+tags:
+  - name: Process Kunde Data
+summary: Get customer data by car ID
+description: Retrieve customer data by car ID
+parameters:
+  - name: bil_id
+    in: path
+    type: integer
+    required: true
+    description: The ID of the car
+responses:
+  200:
+    description: Customer data retrieved successfully
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+        received:
+          type: object

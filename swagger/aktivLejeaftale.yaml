@@ -1,0 +1,32 @@
+tags:
+  - name: Aktiv Lejeaftale
+summary: Get active lejeaftale
+description: Retrieve the active lejeaftale
+responses:
+  200:
+    description: Active lejeaftale retrieved successfully
+    schema:
+      type: object
+      properties:
+        lejeaftale_id:
+          type: integer
+        kunde_id:
+          type: integer
+        bil_id:
+          type: integer
+        start_dato:
+          type: string
+          format: date
+        slut_dato:
+          type: string
+          format: date
+        udleveringssted:
+          type: string
+        abonnements_varighed:
+          type: integer
+        aftale_km:
+          type: number
+        pris_pr_måned:
+          type: number
+        status:
+          type: string

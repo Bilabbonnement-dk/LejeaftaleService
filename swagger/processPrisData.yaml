@@ -1,0 +1,23 @@
+tags:
+  - name: Process Pris Data
+summary: Process price data to Skades Service
+description: Process price data received from Skades Service
+parameters:
+  - name: body
+    in: body
+    required: true
+    schema:
+      type: object
+      properties:
+        price_data:
+          type: object
+responses:
+  200:
+    description: Price data processed successfully
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+        received:
+          type: object

@@ -1,0 +1,26 @@
+tags:
+  - name: Statusopdatering
+summary: Update the status of a lejeaftale
+description: Update the status of a lejeaftale with the provided data
+parameters:
+  - name: lejeAftaleID
+    in: path
+    type: integer
+    required: true
+    description: The ID of the lejeaftale
+  - name: body
+    in: body
+    required: true
+    schema:
+      type: object
+      properties:
+        status:
+          type: string
+responses:
+  200:
+    description: Status updated successfully
+    schema:
+      type: object
+      properties:
+        message:
+          type: string

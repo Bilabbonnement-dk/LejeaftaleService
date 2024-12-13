@@ -1,0 +1,52 @@
+tags:
+  - name: Kunde ID
+summary: Get all lejeaftaler for a specific customer
+description: Retrieve a list of all lejeaftaler for a specific customer
+parameters:
+  - name: kundeID
+    in: path
+    type: integer
+    required: true
+    description: The ID of the customer
+responses:
+  200:
+    description: A list of lejeaftaler for the customer
+    schema:
+      type: object
+      properties:
+        lejeaftaler:
+          type: array
+          items:
+            type: object
+            properties:
+              lejeaftale_id:
+                type: integer
+              kunde_id:
+                type: integer
+              bil_id:
+                type: integer
+              start_dato:
+                type: string
+                format: date
+              slut_dato:
+                type: string
+                format: date
+              udleveringssted:
+                type: string
+              abonnements_varighed:
+                type: integer
+              aftale_km:
+                type: number
+              pris_pr_måned:
+                type: number
+              status:
+                type: string
+              remaining_time:
+                type: integer
+  404:
+    description: No data found for the customer
+    schema:
+      type: object
+      properties:
+        error:
+          type: string

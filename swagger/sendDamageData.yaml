@@ -1,0 +1,23 @@
+tags:
+  - name: Send Damage Data
+summary: Send damage data to Skades Service
+description: Send damage data to Skades Service
+parameters:
+  - name: body
+    in: body
+    required: true
+    schema:
+      type: object
+      properties:
+        damage_data:
+          type: object
+responses:
+  200:
+    description: Damage data sent successfully
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+        received:
+          type: object

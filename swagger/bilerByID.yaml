@@ -1,0 +1,33 @@
+tags:
+  - name: Biler Efter ID
+summary: Get car by ID
+description: Retrieve a car by its ID
+parameters:
+  - name: bil_id
+    in: path
+    type: integer
+    required: true
+    description: The ID of the car
+responses:
+  200:
+    description: Car retrieved successfully
+    schema:
+      type: object
+      properties:
+        bil_id:
+          type: integer
+        model:
+          type: string
+        mærke:
+          type: string
+        årgang:
+          type: integer
+        status:
+          type: string
+  404:
+    description: Car not found
+    schema:
+      type: object
+      properties:
+        error:
+          type: string

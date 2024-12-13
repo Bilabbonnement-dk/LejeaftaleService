@@ -1,0 +1,23 @@
+tags:
+  - name: Process Data
+summary: Process data from Skades Service
+description: Process data received from Skades Service
+parameters:
+  - name: body
+    in: body
+    required: true
+    schema:
+      type: object
+      properties:
+        data:
+          type: object
+responses:
+  200:
+    description: Data processed successfully
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+        received:
+          type: object
