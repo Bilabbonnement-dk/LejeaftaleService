@@ -19,7 +19,7 @@ db_path = os.path.join(script_dir, '../database/lejeaftale.db')
 
 
 ######### url for Skades Service #########
-SKADES_SERVICE_URL = "http://localhost:5001"
+SKADES_SERVICE_URL = "http://localhost:5002"
 
 
 def get_lejeaftale():

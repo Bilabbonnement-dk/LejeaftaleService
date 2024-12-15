@@ -339,4 +339,4 @@ def change_car_status(bil_id):
 
 #@app.route('/lejeAftale/lejeAftaleID', methods=['DELETE'])
 
-app.run(debug=True, host='0.0.0.0', port=5002)
+app.run(debug=True, host='0.0.0.0', port=5003)
