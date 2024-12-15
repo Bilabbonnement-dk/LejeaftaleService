@@ -21,6 +21,7 @@ from Service.connections import get_kunde_data
 from Service.connections import get_lejeaftale
 from Service.connections import get_status
 from Service.connections import send_data_to_skades_service
+from Service.connections import get_price_data
 from import_excel_to_sqlite import import_excel_to_sqlite
 from Service.bildatabase import fetch_all_cars, fetch_car_by_id, delete_car, update_car_status
 
@@ -141,15 +142,15 @@ def available_cars():
     return jsonify(availableCars)
 
 
-@app.route('/nyLejeAftale', methods=['GET'])
-@swag_from('swagger/nyLejeAftale.yaml')
+@app.route('/nyLejeaftale', methods=['GET'])
+@swag_from('swagger/nyLejeaftale.yaml')
 def new_agreements():
     newAgreements = fetch_new_agreements()
     return jsonify(newAgreements)
 
 
-@app.route('/opretLejeAftale', methods=['POST'])
-@swag_from('swagger/opretLejeAftale.yaml')
+@app.route('/opretLejeaftale', methods=['POST'])
+@swag_from('swagger/opretLejeaftale.yaml')
 def add_agreement():
     data = request.get_json()
     if not data:
@@ -177,8 +178,8 @@ def update_agreement_status(lejeAftaleID):
     return jsonify(result), status_code
 
 
-@app.route('/sletLejeAftale/<int:lejeAftaleID>', methods=['DELETE'])
-@swag_from('swagger/sletLejeAftale.yaml')
+@app.route('/sletLejeaftale/<int:lejeAftaleID>', methods=['DELETE'])
+@swag_from('swagger/sletLejeaftale.yaml')
 def remove_agreement(lejeAftaleID):
     # Parse JSON body
     data = request.get_data
