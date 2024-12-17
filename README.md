@@ -1,7 +1,30 @@
 # LejeaftaleService
-Lejeaftale service står får registrering og opdatering af lejeaftaler. Den fungerer som en hoved mikroservicen i biludlejningssystemet og interagerer med andre tjenester som SkadesService for skadesrapportering, og RapportService for forretnings udviklings formål.
+Lejeaftale service står får registrering og opdatering af lejeaftaler. Den fungerer som en hoved microservice i systemet for biludlejning og interagerer med andre tjenester som SkadesService for skadesrapportering, og RapportService for forretnings udviklings formål.
 
 Denne Readme fil beskriver alle tilgængelige endepunkter, deres formål, nødvendige input og de forventede svar.
+
+## Indholdsfortegnelse
+
+1. [Funktioner](#funktioner)
+2. [Arkitektur](#arkitektur)
+3. [Forudsætninger](#forudsætninger)
+4. [Opsætning og installation](#opsætning-og-installation)
+5. [Filstruktur](#filstruktur)
+6. [General information](#general-information)
+7. [Endpoints:](#endpoints)
+  1. [Hent alle aftaler](#hent-alle-aftaler)
+  2. [Hent tilgængelige biler](#hent-tilgængelige-biler)
+  3. [Hent nye aftaler](#hent-nye-aftaler)
+  4. [Opret en ny aftale](#opret-en-ny-aftale)
+  5. [Opdater aftalestatus](#opdater-aftalestatus)
+  6. [Slet en aftale](#slet-en-aftale)
+  7. [Hent kunde data](#hent-kunde-data)
+  8. [Send Data til SkadesService](#send-data-til-skadesservice)
+  9. [Hent Aktive Lejeaftale](#hent-aktive-lejeaftale)
+  10. [Hent bilstatus](#hent-bilstatus)
+  11. [Behandle pris data](#behandle-pris-data)
+8. [Testing](#testing)
+9. [Kontakt](#kontakt)
 
 ## Funktioner
 - Oprette nye lejeaftaler.
@@ -78,25 +101,6 @@ project/
 ├── requirements.txt       # Python dependencies
 └── Dockerfile             # Dockerfilen indeholder instruktioner, som bruges af docker build til at bygge et docker-billede
 ```
----
-
-## Indholdsfortegnelse
-
-1. General information
-
-2. Endpoints:
-  1. Hent alle aftaler
-  2. Hent tilgængelige biler
-  3. Hent nye aftaler
-  4. Opret en ny aftale
-  5. Opdater aftalestatus
-  6. Slet en aftale
-  7. Hent kundedata
-  8. Send Data til SkadesService
-  9. Hent Active Lejeaftale
-  10. Hent bilstatus
-  11. Behandle prisdata
-
 ---
 
 ### Generel information
