@@ -194,7 +194,8 @@ Godkendelse: Der kræves ingen godkendelse for disse endpoint som det ser ud nu.
     {
       "message": "Agreement created successfully",
       "lejeaftale_id": 6,
-      "ledige_biler": "car_costs" = [
+      "ledige_biler":
+        "car_costs": [
             {
               "bil_id": 1,
               "pris_pr_måned": 3000,
