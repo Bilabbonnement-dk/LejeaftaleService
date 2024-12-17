@@ -16,7 +16,7 @@ Microservicen kommunikere med:
 1. **SkadesService**: For skade rapportering.
 2. **RapportService**: For data rapportering.
 3. **Database**: SQLite database for persistent storage of agreements.
-4. **API Gateway** (skal vi lave den????): For dirigere clientens forspørglser.
+4. **API Gateway**: For dirigere clientens forspørglser.
 
 ---
 
