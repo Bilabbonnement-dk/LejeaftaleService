@@ -342,7 +342,9 @@ Expected response:
 }
 ```
 
+### Kontakt
 
+Hvis du har nogen spørgsmål eller oplever problemer, så er du velkommen til at kontakt udviklerteamet: Natazja, Sofie og Viktor.
 
 
 
