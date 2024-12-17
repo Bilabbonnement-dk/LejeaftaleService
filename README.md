@@ -68,7 +68,7 @@ Client --> [API Gateway] --> [LejeaftaleService] --> [SQLite Database]
 ---
 
 ## Filstruktur
-
+```bash
 project/
 │
 ├── app.py                 # Indeholder kun Flask endpoints
@@ -77,7 +77,7 @@ project/
 │   ├── connections.py     # Logik til forbindekse til andre microservice
 ├── requirements.txt       # Python dependencies
 └── Dockerfile             # Dockerfilen indeholder instruktioner, som bruges af docker build til at bygge et docker-billede
-
+```
 ---
 
 ## Indholdsfortegnelse
