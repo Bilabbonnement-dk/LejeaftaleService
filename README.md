@@ -346,6 +346,17 @@ Expected response:
 }
 ```
 
+Se Swagger-dokumentationen for en komplet liste over endpoints.
+
+---
+
+
+## Swagger Dokumentation
+Swagger-dokumentation er tilgængelig for alle endpoints. Når servicen kører kan man få adgang til Swagger UI på:
+`http://localhost:5001/apidocs`
+
+---
+
 ### Kontakt
 
 Hvis du har nogen spørgsmål eller oplever problemer, så er du velkommen til at kontakt udviklerteamet: Natazja, Sofie og Viktor.
