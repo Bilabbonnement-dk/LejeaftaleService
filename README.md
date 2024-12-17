@@ -325,8 +325,15 @@ Når servicen køre, kan man bruge Postman or curl til at interagere med api gat
 
 For eksempel:
 
-Status opdatering: Test LejeaftaleService ved at indsætte det ønskede lejeaftale id som parameter og den nye ændring i json format.
+Status opdatering: Test LejeaftaleService ved at indsætte det ønskede lejeaftale id som parameter og den nye status ændring i json format.
 PUT http://localhost:5003/statusOpdatering/3
+
+Expected json body:
+
+{
+  "lejeaftale_id": 2,
+  "status": "Aktiv"
+}
 
 Expected response:
 
