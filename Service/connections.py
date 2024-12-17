@@ -91,27 +91,37 @@ def send_data_to_skades_service(data):
 ############ Function to fetch BilID and monthly rent related data for a given LejeaftaleID ##########
 
 def get_price_data():
-
     try:
+        print("Connecting to the database...")
         # Connect to the database
         conn = get_db_connection()
+        conn.row_factory = sqlite3.Row  # Configure the cursor to return dictionaries
         cursor = conn.cursor()
 
-        # Query to fetch data for the provided LejeaftaleID
-        query = "SELECT BilID, PrisPrMåned FROM Lejeaftale "
+        # Query to fetch data
+        query = "SELECT BilID, PrisPrMåned FROM Lejeaftale"
+        print("Executing query:", query)
+        cursor.execute(query)
 
-        cursor.execute(query, )
-        result = cursor.fetchone()
+        # Fetch all rows
+        results = cursor.fetchall()
         conn.close()
 
-        # Return the result
-        if result:
-            return {
-                "bil_id": result["BilID"],
-                "pris_pr_måned": result["PrisPrMåned"]
-            }, 200
+        # Debug output
+        print("Results fetched:", results)
+
+        # Transform the results into a list of dictionaries
+        if results:
+            price_data = [
+                {"bil_id": row["BilID"], "pris_pr_måned": row["PrisPrMåned"]}
+                for row in results
+            ]
+            print("Price data:", price_data)
+            return {"price_data": price_data}, 200
         else:
-            return {"error": f"No data found"}, 404
+            print("No data found in the table.")
+            return {"error": "No data found"}, 404
 
     except sqlite3.Error as e:
+        print("Database error:", e)
         return {"error": f"Database error: {e}"}, 500

@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS Lejeaftale (
 )
 ''')
 
-with open('Lejeaftale.csv', 'r', encoding='utf-8-sig') as files:
+with open('database/Lejeaftale.csv', 'r', encoding='utf-8-sig') as files:
     csv_reader = csv.DictReader(files, delimiter=';')
 
     print("Headers:", csv_reader.fieldnames)  # Print the detected headers

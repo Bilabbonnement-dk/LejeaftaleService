@@ -4,6 +4,7 @@
     Behandler oprettekse, fjernelse, brugerhåndtering og bil opdatering.
 """
 
+import unittest
 from flask import Flask, jsonify, request, make_response
 from datetime import datetime
 import requests
@@ -206,6 +207,26 @@ def get_cutomer_data(kundeID):
     return jsonify(customerData), 200
 
 
+class TestLejeaftalerService(unittest.TestCase):
+
+    def test_fetch_agreements(self):
+        agreements = fetch_agreements()
+        self.assertIsInstance(agreements, list)
+        self.assertGreaterEqual(len(agreements), 0)
+
+    def test_create_agreement(self):
+        data = {
+            "kunde_id": 3,
+            "bil_id": 5,
+            "start_dato": "2024-01-01",
+            "slut_dato": "2024-12-31",
+            "pris_pr_måned": 4000
+        }
+        result, status_code = create_agreement(data)
+        self.assertEqual(status_code, 201)
+        self.assertIn("lejeaftale_id", result)
+
+
 ########## Send and recieve data ##########
 
 # Send data to Skades Service
@@ -265,21 +286,16 @@ def get_car_status(bil_id):
     return status
 
 # Preocess price data to Skades Service
-@app.route('/process-pris-data', methods=['POST'])
+@app.route('/process-pris-data', methods=['GET'])
 @swag_from('swagger/processPrisData.yaml')
 def process_price_data():
+    try:
+        # Call get_price_data function to get the data
+        result, status_code = get_price_data()
+        return jsonify(result), status_code
+    except Exception as e:
+        return jsonify({"error": f"Unexpected error: {str(e)}"}), 500
 
-    # Retrieve json payload
-    data = request.json
-
-    # Validate input
-    if not data:
-        return jsonify({"error": "No data found'"}), 400
-
-    # Call the service function to get data
-    result, status_code = get_price_data()
-    
-    return jsonify(result), status_code
 
 ####### Hent Data fra bilDatabase ########
 
