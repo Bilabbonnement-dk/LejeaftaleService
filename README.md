@@ -353,7 +353,7 @@ Se Swagger-dokumentationen for en komplet liste over endpoints.
 
 ## Swagger Dokumentation
 Swagger-dokumentation er tilgængelig for alle endpoints. Når servicen kører kan man få adgang til Swagger UI på:
-`http://localhost:5001/apidocs`
+`http://localhost:5003/apidocs`
 
 ---
 
