@@ -169,7 +169,7 @@ def update_agreement_status(lejeAftaleID):
     if not data:
         return jsonify({"error": "Invalid or missing JSON body"}), 400
 
-    # Validate 'status' field in the body
+    # Validate status field in the body
     new_status = data.get('status')
     if not new_status:
         return jsonify({"error": "'status' field is required"}), 400
@@ -225,6 +225,8 @@ class TestLejeaftalerService(unittest.TestCase):
         result, status_code = create_agreement(data)
         self.assertEqual(status_code, 201)
         self.assertIn("lejeaftale_id", result)
+
+# Command line for running the unit test: python -m unittest app.py
 
 
 ########## Send and recieve data ##########
@@ -350,9 +352,6 @@ def change_car_status(bil_id):
     if "error" in result:
         return jsonify(result), 404
     return jsonify(result), 200
-
-#@app.route('/statusOpdatering/lejeAftaleID', methods=['POST'])
-
-#@app.route('/lejeAftale/lejeAftaleID', methods=['DELETE'])
+    
 
 app.run(debug=True, host='0.0.0.0', port=5003)
