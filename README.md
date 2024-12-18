@@ -1,4 +1,12 @@
 # LejeaftaleService
+
+![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
+![Flask](https://img.shields.io/badge/flask-%23000.svg?style=for-the-badge&logo=flask&logoColor=white)
+![SQLite](https://img.shields.io/badge/sqlite-%2307405e.svg?style=for-the-badge&logo=sqlite&logoColor=white)
+![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
+![Swagger](https://img.shields.io/badge/Swagger-%23Clojure?style=for-the-badge&logo=swagger&logoColor=white)
+![Azure](https://img.shields.io/badge/Microsoft%20Azure-0078D4?style=for-the-badge&logo=microsoft-azure&logoColor=white)
+
 Lejeaftale service står får registrering og opdatering af lejeaftaler. Den fungerer som en hoved microservice i systemet for biludlejning og interagerer med andre tjenester som SkadesService for skadesrapportering, og RapportService for forretnings udviklings formål.
 
 Denne Readme fil beskriver alle tilgængelige endepunkter, deres formål, nødvendige input og de forventede svar.
