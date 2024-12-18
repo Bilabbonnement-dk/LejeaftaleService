@@ -17,7 +17,7 @@ db_path = os.path.join(script_dir, '../database/lejeaftale.db')
 ############   Fetch the agreement data   ##########
 
 def fetch_agreements():
-    # Connect to the database and fetch agreement data
+
     conn = get_db_connection()
     cursor = conn.cursor()
 
@@ -26,7 +26,7 @@ def fetch_agreements():
     rows = cursor.fetchall()
     conn.close()
 
-    # Convert data to a list of dictionaries with required fields
+    # Convert data to a list of dictionaries with these required fields
     filtered_agreements = [
         {
         "lejeaftale_id": row["LejeaftaleID"],
@@ -118,7 +118,7 @@ def create_agreement(data):
     cursor = conn.cursor()
 
     try:
-        # Insert new agreement
+        # Insert new agreement in database
         cursor.execute(
             "INSERT INTO Lejeaftale (KundeID, BilID, StartDato, SlutDate, Udleveringssted, AbonnementsVarighed, AftaleKM, PrisPrMåned, Status) "
             "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
@@ -151,7 +151,7 @@ def create_agreement(data):
 ############   Update new agreement status   ##########
 
 def update_agreement_status(data):
-    # Extract the required fields from the input dictionary
+    
     lejeAftaleID = data.get('lejeaftale_id')
     new_status = data.get('status')
 
@@ -184,9 +184,8 @@ def fetch_customer_data(kundeID):
     if not kundeID:
         return {"error": "Missing required field: 'kunde_id'"}, 400
 
-    # Connect to the database
     conn = sqlite3.connect(db_path)
-    conn.row_factory = sqlite3.Row  # Access rows as dictionaries
+    conn.row_factory = sqlite3.Row  
     cursor = conn.cursor()
 
     # Fetch rental agreements for the given customer ID
