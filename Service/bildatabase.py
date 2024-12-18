@@ -2,7 +2,7 @@ import sqlite3
 
 DATABASE = "bilDatabase.db"
 
-# Hent alle biler
+# Get all cars
 def fetch_all_cars():
     connection = sqlite3.connect(DATABASE)
     cursor = connection.cursor()
@@ -10,14 +10,14 @@ def fetch_all_cars():
     rows = cursor.fetchall()
     connection.close()
 
-    # Konverter til liste af dictionaries
+    # Konverting a list to dict
     columns = [col[0] for col in cursor.description]
     cars = [dict(zip(columns, row)) for row in rows]
 
     connection.close()
     return cars
 
-# Hent en specifik bil
+# Get a specific car
 def fetch_car_by_id(bil_id):
     connection = sqlite3.connect(DATABASE)
     cursor = connection.cursor()
@@ -33,7 +33,7 @@ def fetch_car_by_id(bil_id):
     connection.close()
     return car
 
-# Slet en bil
+# Delete a car
 def delete_car(bil_id):
     connection = sqlite3.connect(DATABASE)
     cursor = connection.cursor()
@@ -48,22 +48,22 @@ def delete_car(bil_id):
         return {"error": f"Bil med ID {bil_id} ikke fundet"}
 
 
-# Opdater bilens status
+# Update a cars status
 def update_car_status(bil_id, new_status):
     connection = sqlite3.connect(DATABASE)
     cursor = connection.cursor()
 
-    # Opdater bilens status baseret på bil_id
+    # Update the status based on the car_id
     cursor.execute('''
         UPDATE bil
         SET status = ?
         WHERE bil_id = ?
     ''', (new_status, bil_id))
 
-    # Gem ændringer
+    # Save the changes made
     connection.commit()
 
-    # Tjek, om en række blev opdateret
+    # Check if a row is not updated
     rows_updated = cursor.rowcount
     connection.close()
 
