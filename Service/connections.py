@@ -11,7 +11,7 @@ from flask import jsonify
 
 def get_db_connection():
     conn = sqlite3.connect('database/lejeaftale.db')
-    conn.row_factory = sqlite3.Row  # Possible fetching rows 
+    conn.row_factory = sqlite3.Row 
     return conn
 
 script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -29,7 +29,7 @@ def get_lejeaftale():
     lejeaftale_list = [{"BilID": row["BilID"], "PrisPrMåned": row["PrisPrMåned"], "KundeID": row["KundeID"], "AbonnementsVarighed": row["AbonnementsVarighed"]} for row in lejeaftale_data]
     return jsonify(lejeaftale_list), 200
 
-#bil_id fra bildatabase og ikke lejeaftale database
+# get bil_id from car database and not lejeaftale database
 def get_status(bil_id):
     conn = get_db_connection()
     status_data = conn.execute("SELECT Status FROM Lejeaftale WHERE BilID = ?", (bil_id,)).fetchone()
@@ -93,21 +93,21 @@ def send_data_to_skades_service(data):
 def get_price_data():
     try:
         print("Connecting to the database...")
-        # Connect to the database
+
         conn = get_db_connection()
-        conn.row_factory = sqlite3.Row  # Configure the cursor to return dictionaries
+        conn.row_factory = sqlite3.Row 
         cursor = conn.cursor()
 
-        # Query to fetch data
+        # Query to fetch car id and monthly price data
         query = "SELECT BilID, PrisPrMåned FROM Lejeaftale"
         print("Executing query:", query)
         cursor.execute(query)
 
-        # Fetch all rows
+
         results = cursor.fetchall()
         conn.close()
 
-        # Debug output
+        # Debugging output
         print("Results fetched:", results)
 
         # Transform the results into a list of dictionaries
